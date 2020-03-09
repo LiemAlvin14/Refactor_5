@@ -7,11 +7,8 @@ import java.util.Scanner;
  *
  */
 public class Permutation {
-
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("Total number N = ");
-		int N = Integer.parseInt(scanner.nextLine());
+	//refactor
+	private int[] scan(int N){
 		int[] listNumber = new int[N];
 		int temp1 = 0;
 
@@ -20,7 +17,11 @@ public class Permutation {
 			temp1 = Integer.parseInt(scanner.nextLine());
 			listNumber[i] = temp1;
 		}
-
+		return listNumber;
+	}
+	
+	//refactor
+	private void showResult(int[] listNumber){
 		System.out.print("The permutations of (");
 
 		for (int i : listNumber) {
@@ -31,25 +32,41 @@ public class Permutation {
 		}
 
 		System.out.println(") are: " + permutations(N));
+	}
+	//refactor
+	Permutation(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Total number N = ");
+		int N = Integer.parseInt(scanner.nextLine());
+		
+		int[] listNumber = scan(N);
+
+		showResult(listNumber)
 
 		permutationNumber(listNumber, N);
 
 		scanner.close();
 	}
 
-	static void permutationNumber(int[] listNumber, int N) {
+	public static void main(String[] args) {
+		new Permutation();
+	}
+	
+	//refactor
+	public int swap(int a , int b){
+		return b;
+	}
+	
+	void permutationNumber(int[] listNumber, int N) {
 		for (int j = 1; j <= N; j++) {
-			// swap
 			for (int i = 0; i < listNumber.length - 1; i++) {
-				int temp = listNumber[i];
-				listNumber[i] = listNumber[i+1];
-				listNumber[i+1] = temp;
+				listNumber[i] = swap(listNumber[i+1] = listNumber[i], listNumber[i+1]);
 				show(listNumber);
 			}
 		}
 	}
 
-	static void show(int[] listNumber) {
+	void show(int[] listNumber) {
 		System.out.print("(");
 		for (int k : listNumber) {
 			if (k == listNumber[listNumber.length - 1])
@@ -61,7 +78,7 @@ public class Permutation {
 		System.out.println();
 	}
 
-	static int permutations(int N) {
+	int permutations(int N) {
 		if (N == 1)
 			return N;
 		return N * permutations(N - 1);
